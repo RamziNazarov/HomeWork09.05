@@ -1,55 +1,60 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+
 
 namespace HomeWork09._05
 {
     class Program
     {
+        static void Show<T>(T array)
+        {
+            foreach (var items in (dynamic)array)
+            {
+                Console.Write(items + " ");
+            }
+            Console.WriteLine();
+        }
+        static int[] NumberToArray(ulong a)
+        {
+            return a.ToString().Select(x => int.Parse(x.ToString())).ToArray().Reverse().ToArray();
+        }
+        static int[] GetSummAndCount(int[] array)
+        {
+            int[] arr = new int[2];
+            arr[0] = array.Where(x => x >= 0).Count();
+            arr[1] = array.Where(x => x < 0).Sum();
+            return arr;
+        }
+        static void GetSortArrayByLength(ref string[] array)
+        {
+            array = array.OrderBy(x => x.Length).ToArray();
+        }
         static void Main(string[] args)
         {
             Console.Write("Введите число: ");
             ulong chislo = ulong.Parse(Console.ReadLine());
-            string ads = "1231a4";
-            int[] hg = ads.Select(x=>int.Parse(x.ToString())).ToArray();
-            for(int i = 0; i < hg.Length;i++)
-            {
-                hg[i] += 100;
-                Console.Write(hg[i] + " ");
-            }
-            Console.WriteLine();
-            var digitArray = chislo.ToString().Select(digit => int.Parse(digit.ToString())).ToArray().Reverse();
-            foreach (var sd in digitArray)
-            {
-                Console.Write(sd + " ");
-            }
-            Console.WriteLine();
-            int[] array = { 2,1,1};
-            int[] rr = { 1, 2, 3, 4, 5, 6, 87, 9, 7, 5, 4, 3, 23, 1, 2, -10000,-1,-100,-10 };
-            var sum = rr.Where(x => x < 0).Sum();
-            var coun = rr.Where(x => x >= 0).Count();
-            Console.WriteLine(coun);
-            Console.WriteLine(sum);
-            string[] arr = { "1","123","33","45621","1234","135431513","0"};
-            var a = arr.OrderBy(x => x.Length);
-            foreach(var it in a)
-            {
-                Console.WriteLine(it);
-            }
-            var b = array.Distinct();
-            foreach (var s in b)
-            {
-                Console.WriteLine(s);
-            }
+            var aa = NumberToArray(chislo);
+            Show<int[]>(aa);
+            int[] rr = { 1,2,3,4,5,6,7,8,9,10,-11,-12,-13,-14,-15 };
+            var arr2 = GetSummAndCount(rr);
+            Show<int[]>(arr2);
+            string[] arr = { "Telescopes","Glasses","Eyes","Monocles"};
+            GetSortArrayByLength(ref arr);
+            Show<string[]>(arr);
+            double[] asd1 = { 1, 1, 2, 1, 1 };
+            double[] asd = { 0,0,0.54,0,0 };
+            double a = GetUnic(asd);
+            double b = GetUnic(asd1);
+            Console.WriteLine(b);
+            Console.WriteLine(a);
             Console.ReadKey();
         }
-        static int[] Massiv(int[] array)
+        static double GetUnic(double[] array)
         {
-            int[] arr = new int[2];
-            for (int i = 0; i < array.Length; i++)
-            {
-                
-            }
-            return arr;
+            var a = array.GroupBy(g => g).Where(g => g.Count() < 2).Select(g => g.Key).ToArray();
+            return a[0];
         }
     }
 }

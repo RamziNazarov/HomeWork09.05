@@ -22,9 +22,16 @@ namespace HomeWork09._05
         }
         static int[] GetSummAndCount(int[] array)
         {
-            int[] arr = new int[2];
-            arr[0] = array.Where(x => x >= 0).Count();
-            arr[1] = array.Where(x => x < 0).Sum();
+            int[] arr = new int[0];
+            if(array.Length !=0)
+            {
+                if(array.Any(x=>x>0||x<0))
+                { 
+                    Array.Resize(ref arr, 2);
+                    arr[0] = array.Where(x => x > 0).Count();
+                    arr[1] = array.Where(x => x < 0).Sum();
+                }
+            }
             return arr;
         }
         static void GetSortArrayByLength(ref string[] array)
